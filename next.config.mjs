@@ -3,12 +3,20 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https", // أو 'http' لو localhost
-        hostname: "res.cloudinary.com", // أو 'localhost' أو '**' (لكل الدومينات)
+        protocol: "https",
+        hostname: "meaningful-kindness-c62a76da59.strapiapp.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com", // لو بتستخدم Cloudinary
       },
       {
         protocol: "http",
         hostname: "localhost",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
       },
     ],
   },
