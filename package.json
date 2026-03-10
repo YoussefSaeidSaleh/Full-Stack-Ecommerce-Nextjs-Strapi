@@ -17,7 +17,7 @@
     "axios": "^1.10.0",
     "lucide-react": "^0.525.0",
     "nanoid": "^5.1.5",
-    "next": "^16.1.6",
+    "next": "^15.3.6",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-loading-skeleton": "^3.5.0",
