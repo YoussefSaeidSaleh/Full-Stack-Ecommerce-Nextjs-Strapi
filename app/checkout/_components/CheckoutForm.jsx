@@ -35,7 +35,7 @@ const CheckoutForm = ({ amount }) => {
       return;
     }
 
-    const res = await fetch("api/create-intent", {
+    const res = await fetch("/api/create-intent", {
       method: "POST",
       body: JSON.stringify({
         amount: amount,
@@ -80,8 +80,11 @@ const CheckoutForm = ({ amount }) => {
   };
 
   const sendEmail = async () => {
-    const res = await fetch("api/send-email", {
+    const res = await fetch("/api/send-email", {
       method: "POST",
+      body: JSON.stringify({
+        to: [user?.primaryEmailAddress?.emailAddress],
+      }),
     });
   };
   return (

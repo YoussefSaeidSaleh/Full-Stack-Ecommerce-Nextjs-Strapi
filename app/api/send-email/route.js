@@ -24,7 +24,7 @@ export async function POST(request) {
 
     // 3. إرسال الإيميل
     const result = await resend.emails.send({
-      from: "onboarding@yourdomain.com", // غيّر إلى دومينك المعتمد في Resend
+      from: "onboarding@resend.dev", // غيّر إلى دومينك المعتمد في Resend
       to: to ?? ["youssefsaidk123@gmail.com"],
       subject: subject ?? "Hello world",
       react: EmailTemplate({ firstName: "John" }),
