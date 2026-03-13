@@ -34,6 +34,7 @@ const CheckoutForm = ({ amount }) => {
 
     try {
       await createOrder();
+      await sendEmail();
     } catch (err) {
       console.log(err);
     }
@@ -57,12 +58,6 @@ const CheckoutForm = ({ amount }) => {
 
     if (result.error) {
       console.log(result.error.message);
-    } else {
-      try {
-        await sendEmail();
-      } catch (err) {
-        console.log("sendEmail error after payment:", err);
-      }
     }
   };
 
