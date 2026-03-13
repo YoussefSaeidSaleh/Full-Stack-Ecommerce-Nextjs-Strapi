@@ -93,6 +93,7 @@ const CheckoutForm = ({ amount }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           to: [user?.primaryEmailAddress?.emailAddress],
+          firstName: user?.fullName?.split(" ")[0] || "Customer",
         }),
       });
       const data = await res.json();

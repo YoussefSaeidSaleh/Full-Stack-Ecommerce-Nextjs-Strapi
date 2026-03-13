@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic"; // اجعل الـ route ديناميك�
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { to, subject, html, text } = body;
+    const { to, subject, html, text, firstName } = body;
 
     // 1. تحقق من وجود المفتاح أولاً
     const apiKey = process.env.RESEND_API_KEY;
@@ -14,7 +14,7 @@ export async function POST(request) {
       console.error("RESEND_API_KEY is missing in environment");
       return Response.json(
         { ok: false, error: "Server configuration error" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -27,17 +27,14 @@ export async function POST(request) {
       from: "onboarding@resend.dev", // غيّر إلى دومينك المعتمد في Resend
       to: to ?? ["youssefsaidk123@gmail.com"],
       subject: subject ?? "Hello world",
-      react: EmailTemplate({ firstName: "John" }),
+      react: EmailTemplate({ firstName: firstName || "Customer" }),
       html,
       text,
     });
 
     if (result.error) {
       console.error("Resend API error:", result.error);
-      return Response.json(
-        { ok: false, error: result.error },
-        { status: 500 }
-      );
+      return Response.json({ ok: false, error: result.error }, { status: 500 });
     }
 
     return Response.json({ ok: true, data: result });
@@ -45,7 +42,7 @@ export async function POST(request) {
     console.error("Send-email error:", err);
     return Response.json(
       { ok: false, error: err.message || "Failed to send email" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
