@@ -26,13 +26,17 @@ const CheckoutForm = ({ amount }) => {
       setLoading(false);
       setErrorMessage(error.message);
     };
-    createOrder();
-    sendEmail();
-
     const { error: submitError } = await elements.submit();
     if (submitError) {
       handleError(submitError);
       return;
+    }
+
+    try {
+      await createOrder();
+      await sendEmail();
+    } catch (err) {
+      console.log(err);
     }
 
     const res = await fetch("/api/create-intent", {
@@ -57,35 +61,45 @@ const CheckoutForm = ({ amount }) => {
     }
   };
 
-  const createOrder = () => {
+  const createOrder = async () => {
     let productDocumentId = [];
     cart.forEach((el) => {
       productDocumentId.push(el?.product?.documentId);
     });
     const data = {
       data: {
-        email: user.primaryEmailAddress.emailAddress,
-        username: user.fullName,
+        email: user?.primaryEmailAddress?.emailAddress,
+        username: user?.fullName,
         amount,
         products: productDocumentId,
       },
     };
-    OrderApis.createOrder(data).then((res) => {
+    try {
+      const res = await OrderApis.createOrder(data);
       if (res) {
         cart.forEach((el) => {
           CartApis.deleteCartItem(el?.documentId).then((result) => {});
         });
       }
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const sendEmail = async () => {
-    const res = await fetch("/api/send-email", {
-      method: "POST",
-      body: JSON.stringify({
-        to: [user?.primaryEmailAddress?.emailAddress],
-      }),
-    });
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: [user?.primaryEmailAddress?.emailAddress],
+        }),
+      });
+      const data = await res.json();
+      console.log("sendEmail response:", data);
+    } catch (err) {
+      console.log("sendEmail error:", err);
+    }
   };
   return (
     <form onSubmit={handleSubmit}>

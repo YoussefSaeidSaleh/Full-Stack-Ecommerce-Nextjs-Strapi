@@ -32,6 +32,14 @@ export async function POST(request) {
       text,
     });
 
+    if (result.error) {
+      console.error("Resend API error:", result.error);
+      return Response.json(
+        { ok: false, error: result.error },
+        { status: 500 }
+      );
+    }
+
     return Response.json({ ok: true, data: result });
   } catch (err) {
     console.error("Send-email error:", err);
