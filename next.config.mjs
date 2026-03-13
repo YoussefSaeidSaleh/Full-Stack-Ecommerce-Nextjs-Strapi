@@ -6,9 +6,15 @@ const nextConfig = {
         protocol: "https",
         hostname: "meaningful-kindness-c62a76da59.strapiapp.com",
       },
+      // --- الإضافة الجديدة هنا ---
       {
         protocol: "https",
-        hostname: "res.cloudinary.com", // لو بتستخدم Cloudinary
+        hostname: "meaningful-kindness-c62a76da59.media.strapiapp.com",
+      },
+      // --------------------------
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com", // يمكن إزالته إذا لم تعد تستخدمه
       },
       {
         protocol: "http",
